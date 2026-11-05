@@ -6,8 +6,8 @@ from torch.nn import functional as F # makes the functions in torch.nn.functiona
 
 # hyperparameters
 
-batch_size = 64
-block_size = 256
+batch_size = 64 # number of text sequences processed together in one training step
+block_size = 256 # number of tokens (characters) in each sequence, maximum context length
 max_iters = 5000
 eval_interval = 500
 learning_rate = 3e-4
