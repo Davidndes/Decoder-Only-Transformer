@@ -233,35 +233,35 @@ class TransformerLanguageModel(nn.Module): # inherits from nn.Module PyTorch's m
 
 m = TransformerLanguageModel(n_embed).to(device) # creates a model instance
 
-m.load_state_dict(torch.load("model_weights.pth", map_location=device, weights_only=True))
+#m.load_state_dict(torch.load("model_weights.pth", map_location=device, weights_only=True)) -- load saved weights
 
-#logits, loss = m(input_tokens, target_tokens) # passing in the sequences with the correct answers to run the forward pass
+logits, loss = m(input_tokens, target_tokens) # passing in the sequences with the correct answers to run the forward pass
 # this only runs the forward pass because PyTorch defines calling a model with parentheses as calling the forward method
 
-#optimizer = torch.optim.AdamW(m.parameters(), lr = learning_rate) # different from standard adam in how it handles weight decay
+optimizer = torch.optim.AdamW(m.parameters(), lr = learning_rate) # different from standard adam in how it handles weight decay
  
 
 # training  
 
-#m.train()
+m.train()
 
-#for steps in range(max_iters): # run the loop max_iter times
+for steps in range(max_iters): # run the loop max_iter times
     # sample a batch of data
- #   input_tokens, target_tokens = get_batch('train')
+    input_tokens, target_tokens = get_batch('train')
     #evaluate the loss
-  #  logits, loss = m(input_tokens, target_tokens) # runs forward pass method
-   # optimizer.zero_grad(set_to_none = True) # clears leftover gradients 
-   # loss.backward()
-   # optimizer.step()
+    logits, loss = m(input_tokens, target_tokens) # runs forward pass method
+    optimizer.zero_grad(set_to_none = True) # clears leftover gradients 
+    loss.backward()
+    optimizer.step()
 
-    #if (steps + 1) % eval_interval == 0:
-     #   print(f"Step {steps + 1}/ {max_iters}: loss {loss.item():.4f}")
+    if (steps + 1) % eval_interval == 0:
+        print(f"Step {steps + 1}/ {max_iters}: loss {loss.item():.4f}")
 
-#print(loss.item())
-#print(logits.shape) # this prints the returned scores dimensions (prediction positions each with 65 character scores)
-#print(loss) # prints the final training batch's loss
+print(loss.item())
+print(logits.shape) # this prints the returned scores dimensions (prediction positions each with 65 character scores)
+print(loss) # prints the final training batch's loss
 
-# torch.save(m.state_dict(),"model_weights.pth")
+torch.save(m.state_dict(),"model_weights.pth")
 
 # text generation
 
@@ -290,4 +290,4 @@ print(f"Without cache: {uncatched_seconds:.3f} seconds")
 print(f"With cache: {cached_seconds:.3f} seconds")
 
 print(decoder(cached_output[0].tolist()))
-    # this starts with one token and then generates 2000 from it and changes it to a python list from a tensor with zero selecting the first sequence which is passed into decoder
+# this starts with one token and then generates 2000 from it and changes it to a python list from a tensor with zero selecting the first sequence which is passed into decoder
