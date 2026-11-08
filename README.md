@@ -121,7 +121,7 @@ GPU operations were synchronized before starting and stopping each timer. The me
 
 Hardware: MPS
 
-Across three runs generating 250 new characters on Apple’s MPS backend, median throughput increased from 55.2 to 74.9 tokens/sec with KV caching—a 35.8% increase (1.36× speedup). Timing includes prompt processing and excludes decoding and printing. All runs stayed within the 256-token context limit.
+Across three runs generating 250 new characters on Apple’s MPS backend, median throughput increased from 55.2 to 74.9 tokens/sec with KV caching (1.36× speedup).
 
 ## Results and open questions
 
