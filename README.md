@@ -108,6 +108,10 @@ The model has learned position embeddings for 256 positions. In the original gen
 
 To preserve that behavior, the cached generator clears and rebuilds its cache when the window shifts. 
 
+### Checking the cached generator against the original
+
+Before timing anything, I checked that caching did not change the model's output. I ran both generators from the same starting context with the same seed and compared the generated characters.
+
 ## Timing comparison
 
 I compared the two generation methods using the same model weights, a starting context containing token ID zero, and 250 new characters. Both calls used evaluation mode with gradient tracking disabled.
@@ -129,5 +133,4 @@ The current script creates a validation split, but does not yet evaluate loss on
 
 Further questions include:
 
-1. How consistent is the timing difference across repeated runs?
-2. How well does the trained model predict characters in the validation split?
+1. How well does the trained model predict characters in the validation split?
